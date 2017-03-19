@@ -61,6 +61,10 @@ public class RequestController {
         StatisticCallsListWrapper listWrapper = new StatisticCallsListWrapper();
         List<StatisticCalls> callses = requestService.getStatisticsCalls(startDate,endDate);
         listWrapper.setStatisticCallses(new ArrayList<>(callses));
+        double average = requestService.getAverageValue(callses);
+        modelAndView.addObject("average1", String.format("%.2f",average));
+        modelAndView.addObject("dispersia1",String.format("%.4f",requestService.getDisperssion(callses,average)));
+        modelAndView.addObject("averageSqrt1", String.format("%.4f",requestService.getAveragePow(callses,average)));
         modelAndView.addObject("callses",listWrapper);
         modelAndView.setViewName("request");
         return  modelAndView;
@@ -72,6 +76,10 @@ public class RequestController {
         StatisticCallsListWrapper listWrapper = new StatisticCallsListWrapper();
         List<StatisticCalls> calls = requestService.getStatisticsCallByRegion(startDate,endDate,region.getRegionId());
         listWrapper.setStatisticCallses(new ArrayList<>(calls));
+        double average = requestService.getAverageValue(calls);
+        modelAndView.addObject("average2", String.format("%.2f",average));
+        modelAndView.addObject("dispersia2",String.format("%.4f",requestService.getDisperssion(calls,average)));
+        modelAndView.addObject("averageSqrt2", String.format("%.4f",requestService.getAveragePow(calls,average)));
         modelAndView.addObject("calls",listWrapper);
         modelAndView.setViewName("request");
         return  modelAndView;
@@ -84,6 +92,10 @@ public class RequestController {
         List<StatisticCalls> calls = requestService.getStatisticsReasonByRegion(startDate,endDate,region.getRegionId());
         listWrapper.setStatisticCallses(new ArrayList<>(calls));
         modelAndView.addObject("callsReason",listWrapper);
+        double average = requestService.getAverageValue(calls);
+        modelAndView.addObject("average3", String.format("%.2f",average));
+        modelAndView.addObject("dispersia3",String.format("%.4f",requestService.getDisperssion(calls,average)));
+        modelAndView.addObject("averageSqrt3", String.format("%.4f",requestService.getAveragePow(calls,average)));
         modelAndView.setViewName("request");
         return  modelAndView;
     }
@@ -95,12 +107,16 @@ public class RequestController {
         List<StatisticCalls> calls = requestService.getStatisticsCallsRegionsBy(startDate,endDate);
         listWrapper.setStatisticCallses(new ArrayList<>(calls));
         modelAndView.addObject("callsRegion",listWrapper);
+        double average = requestService.getAverageValue(calls);
+        modelAndView.addObject("average4", String.format("%.2f",average));
+        modelAndView.addObject("dispersia4",String.format("%.4f",requestService.getDisperssion(calls,average)));
+        modelAndView.addObject("averageSqrt4", String.format("%.4f",requestService.getAveragePow(calls,average)));
         modelAndView.setViewName("request");
         return  modelAndView;
     }
 
     @RequestMapping(value = "/request/export", method = RequestMethod.POST)
-    public ModelAndView exportToFile(@ModelAttribute("calls") StatisticCallsListWrapper calls){
+    public ModelAndView exportToFile(@ModelAttribute("callsRegion") StatisticCallsListWrapper calls){
         //ModelAndView modelAndView = new ModelAndView();
         //modelAndView.setViewName("request");
         ArrayList<StatisticCalls> callses = calls.getStatisticCallses();
