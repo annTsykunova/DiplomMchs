@@ -33,10 +33,14 @@
             <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <form:form  method = "get" action = "${pageContext.request.contextPath}/tables">
+                        <ul>
                     <c:forEach items="${allTables}" var="item">
+                            <li>
                         <input type="radio"  id="radio" name="table" value="${item}"/>
                         <label for="radio">${item}</label>
+                                </li>
                         </c:forEach>
+                        </ul>
                         <input type="submit" class="btn btn-info" value="Выбрать"/>
                     </form:form>
                     </div>
@@ -66,6 +70,14 @@
                             <a href="/request" class="list-group-item">
                                 <h4 class="list-group-item-heading">Статистика происшествий по регионе в период</h4>
                                 <p class="list-group-item-text">Параметры: дата начала, дата окончания</p>
+                            </a>
+                            <a href="/request" class="list-group-item">
+                                <h4 class="list-group-item-heading">Статистика происшествий по причине вызовов в период</h4>
+                                <p class="list-group-item-text">Параметры: дата начала, дата окончания, причина</p>
+                            </a>
+                            <a href="/request" class="list-group-item">
+                                <h4 class="list-group-item-heading">Статистика происшествий по классу транспортного средства в период</h4>
+                                <p class="list-group-item-text">Параметры: дата начала, дата окончания, класс</p>
                             </a>
                         </div>
                     </div>

@@ -1,9 +1,6 @@
 package by.bsu.modulestatic.controller;
 
-import by.bsu.modulestatic.entity.CallReason;
-import by.bsu.modulestatic.entity.DictionaryRegions;
-import by.bsu.modulestatic.entity.VechicleClass;
-import by.bsu.modulestatic.entity.VechicleType;
+import by.bsu.modulestatic.entity.*;
 import by.bsu.modulestatic.service.TableService;
 import by.bsu.modulestatic.service.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +24,26 @@ public class RegionController {
     @RequestMapping(value = "/tables", method = {RequestMethod.POST,RequestMethod.GET})
     public ModelAndView showSingleTable(@RequestParam("table")String table) throws ServiceException {
         ModelAndView modelAndView = new ModelAndView();
-        if(table.equals("call_reason")){
+        if(table.equals("call reason")){
             List<CallReason> allCallReason = tableService.getAllCallReason();
             modelAndView.addObject("allCallReason",allCallReason);
             modelAndView.addObject("callReason",new CallReason());
-        }else if(table.equals("dictionary_regions")){
+        }else if(table.equals("dictionary regions")){
             List<DictionaryRegions> allRegions = tableService.getAllRegions();
             modelAndView.addObject("allRegions",allRegions);
             modelAndView.addObject("region",new DictionaryRegions());
-        }else if(table.equals("vechicle_class")){
+        }else if(table.equals("vechicle class")){
             List<VechicleClass> allVechicleClass = tableService.getAllVechicleClass();
             modelAndView.addObject("allVechicleClass",allVechicleClass);
             modelAndView.addObject("vechicleClass",new VechicleClass());
-        }else if(table.equals("vechicle_type")){
+        }else if(table.equals("vechicle type")){
             List<VechicleType> allVechicleType = tableService.getAllVechicleType();
             modelAndView.addObject("allVechicleType",allVechicleType);
             modelAndView.addObject("vechicleType",new VechicleType());
+        }else if(table.equals("calls")){
+            List<Calls> allCalls = tableService.getAllCalls();
+            modelAndView.addObject("allCalls",allCalls);
+            modelAndView.addObject("calls",new Calls());
         }
         modelAndView.setViewName("tables");
         return modelAndView;

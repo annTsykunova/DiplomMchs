@@ -2,10 +2,7 @@ package by.bsu.modulestatic.service;
 
 import by.bsu.modulestatic.dao.TableDao;
 import by.bsu.modulestatic.dao.util.DaoException;
-import by.bsu.modulestatic.entity.CallReason;
-import by.bsu.modulestatic.entity.DictionaryRegions;
-import by.bsu.modulestatic.entity.VechicleClass;
-import by.bsu.modulestatic.entity.VechicleType;
+import by.bsu.modulestatic.entity.*;
 import by.bsu.modulestatic.service.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,6 +25,17 @@ public class TableService {
         }
         return callReasons;
     }
+
+    public List<Calls> getAllCalls() throws ServiceException {
+        List<Calls> callses = null;
+        try {
+            callses =  tableDao.getAllCalls();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return callses;
+    }
+
 
     public List<DictionaryRegions> getAllRegions() throws ServiceException {
         List<DictionaryRegions> dictionaryRegionses = null;

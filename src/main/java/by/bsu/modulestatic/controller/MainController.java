@@ -21,6 +21,7 @@ public class MainController {
     public ModelAndView showAllRegions() throws ServiceException {
         ModelAndView modelAndView = new ModelAndView();
         List<String> tables = mainService.getAllTables();
+
         modelAndView.addObject("allTables",tables);
         modelAndView.setViewName("main");
         return modelAndView;

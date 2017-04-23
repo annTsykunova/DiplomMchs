@@ -66,6 +66,65 @@ public class RequestDao {
         }
     }
 
+    public List<StatisticCalls> getStatisticsCallsReasonsByReason(String startDate, String endDate, int reasonId) throws DaoException {
+        Connection connection = null;
+        ResultSet resultSet;
+        List<StatisticCalls> callses = new ArrayList<>();
+        StatisticCalls call;
+        PreparedStatement preparedStatement;
+        String query = sqlQueries.getProperty("get.count.calls.reason.by.id.reason");
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,startDate);
+            preparedStatement.setString(2,endDate);
+            preparedStatement.setInt(3,reasonId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+
+                call = initStatisticCalls(resultSet);
+                callses.add(call);
+            }
+            preparedStatement.close();
+            return callses;
+        } catch (SQLException ex) {
+            String exceptionMessage = EXCEPTION_ACT_MESSAGE + "during getting by id ";
+            throw new DaoException(exceptionMessage, ex);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+    }
+
+    public List<StatisticCalls> getStatisticsCallsReasonsByVecclass(String startDate, String endDate, int vecclassId) throws DaoException {
+        Connection connection = null;
+        ResultSet resultSet;
+        List<StatisticCalls> callses = new ArrayList<>();
+        StatisticCalls call;
+        PreparedStatement preparedStatement;
+        String query = sqlQueries.getProperty("get.count.calls.reason.by.id.vecclass");
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,startDate);
+            preparedStatement.setString(2,endDate);
+            preparedStatement.setInt(3,vecclassId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+
+                call = initStatisticCalls(resultSet);
+                callses.add(call);
+            }
+            preparedStatement.close();
+            return callses;
+        } catch (SQLException ex) {
+            String exceptionMessage = EXCEPTION_ACT_MESSAGE + "during getting by id ";
+            throw new DaoException(exceptionMessage, ex);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+    }
+
+
     public List<StatisticCalls> getStatisticsReasonsByRegion(String startDate, String endDate, int reasonId) throws DaoException {
         Connection connection = null;
         ResultSet resultSet;

@@ -25,6 +25,8 @@ public class ExcelBuilder extends AbstractExcelView {
             throws Exception {
         // get data model which is passed by the Spring container
         List<StatisticCalls> callsList = (List<StatisticCalls>) model.get("statisticCalls");
+        List<String> valueList = (List<String>) model.get("statisticValues");
+
 
         // create a new Excel sheet
         HSSFSheet sheet = workbook.createSheet("Calls");
@@ -69,6 +71,39 @@ public class ExcelBuilder extends AbstractExcelView {
             aRow.createCell(3).setCellValue(aCalls.getReasonName());
             aRow.createCell(4).setCellValue(aCalls.getCount());
         }
+
+        header.createCell(5).setCellValue("Статистика");
+        header.getCell(5).setCellStyle(style);
+
+        header.createCell(6).setCellValue("Среднее значение");
+        header.getCell(6).setCellStyle(style);
+
+        header.createCell(7).setCellValue("Дисперсия");
+        header.getCell(7).setCellStyle(style);
+
+        header.createCell(8).setCellValue("Среднее квадратичное");
+        header.getCell(8).setCellStyle(style);
+
+        header.createCell(9).setCellValue("Размах вариации");
+        header.getCell(9).setCellStyle(style);
+
+        header.createCell(10).setCellValue("Коэффициент вариации");
+        header.getCell(10).setCellStyle(style);
+
+        header.createCell(11).setCellValue("Коэффициент осцилляции");
+        header.getCell(11).setCellStyle(style);
+
+        if(valueList!=null) {
+
+            HSSFRow aRow = sheet.createRow(rowCount++);
+            aRow.createCell(6).setCellValue(valueList.get(0));
+            aRow.createCell(7).setCellValue(valueList.get(1));
+            aRow.createCell(8).setCellValue(valueList.get(2));
+            aRow.createCell(9).setCellValue(valueList.get(3));
+            aRow.createCell(10).setCellValue(valueList.get(4));
+            aRow.createCell(11).setCellValue(valueList.get(5));
+        }
+
     }
 
 }

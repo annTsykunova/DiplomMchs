@@ -349,6 +349,50 @@
             </div>
         </div>
         </c:if>
+
+        <c:if test="${not empty allCalls}">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Calls</a>
+                    </h4>
+                </div>
+                <div id="collapse5" class="panel-collapse collapse in">
+                    <div class="panel-body">
+
+                        <table class="table table-hover " >
+                            <thead>
+                            <tr>
+                                <th>id_calls</th>
+                                <th>date</th>
+                                <th>id_reason</th>
+                                <th>id_vecclass</th>
+                                <th>id_region</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <c:forEach items="${allCalls}" var="currentCall">
+                            <tr>
+                                    <td><form:input path="callsId" value="${currentCall.callsId}" readonly="readonly"/></td>
+                                    <td><form:input class="form-control" path="date" value="${currentCall.date}"/></td>
+                                    <td><form:input class="form-control" path="reasonId" value="${currentCall.reasonId}"/></td>
+                                    <td><form:input class="form-control" path="vecclassId" value="${currentCall.vecclassId}"/></td>
+                                    <td><form:input class="form-control" path="regionId" value="${currentCall.regionId}"/></td>
+
+                                    <form:form action = "${pageContext.request.contextPath}/tables/edit/delete" modelAttribute="calls">
+                                    <input type="hidden" name="table" class = "input-field" value = "calls"/>
+                                    <input type="hidden" name="id"  class = "input-field"  value = "${currentCall.callsId}"/>
+                                    <input type="submit" class="btn btn-danger" value="Удалить"
+                                           onclick="return confirm('Are you sure?')">
+                                    </form:form>
+                            </tr>
+                            </c:forEach>
+
+                    </div>
+                </div>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

@@ -6,6 +6,7 @@ import by.bsu.modulestatic.entity.*;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
@@ -166,6 +167,40 @@ public class TableDao {
         return vechicleType;
     }
 
+    public List<Calls> getAllCalls() throws DaoException {
+        Connection connection = null;
+        ResultSet resultSet;
+        List<Calls> callses = new ArrayList<>();
+        Calls calls ;
+        PreparedStatement preparedStatement;
+        String query = sqlQueries.getProperty("calls.get.all");
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                calls = initCalls(resultSet);
+                callses.add(calls);
+            }
+            preparedStatement.close();
+            return callses;
+        } catch (SQLException ex) {
+            String exceptionMessage = EXCEPTION_ACT_MESSAGE + "during getting by id ";
+            throw new DaoException(exceptionMessage, ex);
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource);
+        }
+    }
+    protected Calls initCalls(ResultSet resultSet) throws SQLException {
+        Calls calls = new Calls();
+        calls.setCallsId(resultSet.getInt(DBColumnName.CALLS_ID));
+        calls.setReasonId(resultSet.getInt(DBColumnName.REASON_ID));
+        calls.setDate(resultSet.getTimestamp(DBColumnName.DATE));
+        calls.setVecclassId(resultSet.getInt(DBColumnName.VECCLASS_ID));
+        calls.setRegionId(resultSet.getInt(DBColumnName.REGION_ID));
+        return calls;
+    }
+
     public void deleteItem(int id,String table) throws DaoException {
         Connection connection = null;
         PreparedStatement preparedStatement;
@@ -178,6 +213,8 @@ public class TableDao {
             query = sqlQueries.getProperty("vechicle_class.delete.by.id");
         }else if(table.equals("vechicle_type")){
             query = sqlQueries.getProperty("vechicle_type.delete.by.id");
+        }else if(table.equals("calls")){
+            query = sqlQueries.getProperty("calls.delete.by.id");
         }
         try {
             connection = DataSourceUtils.getConnection(dataSource);
