@@ -231,11 +231,12 @@ public class RequestController {
         StatisticCallsListWrapper listWrapper = new StatisticCallsListWrapper();
         StatisticValueListWrapper listWrapper1 = new StatisticValueListWrapper();
         List<StatisticCalls> calls = requestService.getStatisticsCallsReasonByVecclass(startDate,endDate,vechicleClass.getClassId());
-        listWrapper.setStatisticCallses(new ArrayList<>(calls));
-        modelAndView.addObject("callsReasonDateVecclass",listWrapper);
-        double average = requestService.getAverageValue(calls);
-        double averagePow = requestService.getAveragePow(calls,average);
-        int variations = requestService.getVariationsInScope(calls);
+        if(!calls.isEmpty()) {
+            listWrapper.setStatisticCallses(new ArrayList<>(calls));
+            modelAndView.addObject("callsReasonDateVecclass", listWrapper);
+            double average = requestService.getAverageValue(calls);
+            double averagePow = requestService.getAveragePow(calls, average);
+            int variations = requestService.getVariationsInScope(calls);
         /*List<String> listStatisticsVar6 = new ArrayList<>();
         listStatisticsVar6.add(String.format("%.2f",average));
         listStatisticsVar6.add(String.format("%.4f",requestService.getDisperssion(calls,average)));
@@ -245,12 +246,13 @@ public class RequestController {
         listStatisticsVar6.add(String.format("%.2f",requestService.getOscilationCoefficient(average,variations)));
         listWrapper1.setStatisticValue(new ArrayList<>(listStatisticsVar6));
         modelAndView.addObject("listStatisticsVar6",listWrapper1);*/
-        modelAndView.addObject("average6", String.format("%.2f",average));
-        modelAndView.addObject("dispersia6",String.format("%.4f",requestService.getDisperssion(calls,average)));
-        modelAndView.addObject("averageSqrt6", String.format("%.4f",averagePow));
-        modelAndView.addObject("variations6", variations);
-        modelAndView.addObject("coefOfVaer6", String.format("%.2f",requestService.getCoefficientOfVariation(average, averagePow)));
-        modelAndView.addObject("oscilCoeff6", String.format("%.2f",requestService.getOscilationCoefficient(average,variations)) );
+            modelAndView.addObject("average6", String.format("%.2f", average));
+            modelAndView.addObject("dispersia6", String.format("%.4f", requestService.getDisperssion(calls, average)));
+            modelAndView.addObject("averageSqrt6", String.format("%.4f", averagePow));
+            modelAndView.addObject("variations6", variations);
+            modelAndView.addObject("coefOfVaer6", String.format("%.2f", requestService.getCoefficientOfVariation(average, averagePow)));
+            modelAndView.addObject("oscilCoeff6", String.format("%.2f", requestService.getOscilationCoefficient(average, variations)));
+        }
         modelAndView.setViewName("request");
         return  modelAndView;
     }

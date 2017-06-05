@@ -75,10 +75,7 @@
                                 <h4 class="list-group-item-heading">Статистика происшествий по причине вызовов в период</h4>
                                 <p class="list-group-item-text">Параметры: дата начала, дата окончания, причина</p>
                             </a>
-                            <a href="/request" class="list-group-item">
-                                <h4 class="list-group-item-heading">Статистика происшествий по классу транспортного средства в период</h4>
-                                <p class="list-group-item-text">Параметры: дата начала, дата окончания, класс</p>
-                            </a>
+
                         </div>
                     </div>
                 </div>
